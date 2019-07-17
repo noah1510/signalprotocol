@@ -10,8 +10,8 @@ import (
 
 /*Exchange does a simple x25519 keyexchange*/
 func Exchange(
-	publicKeyB *ed25519.PublicKey,
-	privateKeyA *ed25519.PrivateKey) ([32]byte, error) {
+	privateKeyA *ed25519.PrivateKey,
+	publicKeyB *ed25519.PublicKey) ([32]byte, error) {
 
 	var returnError error
 	var result [32]byte

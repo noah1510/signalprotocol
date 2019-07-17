@@ -20,8 +20,8 @@ func TestExchange(t *testing.T) {
 	log.Printf("priv1:%+v", priv1.Seed())
 	log.Printf("priv2:%+v", priv2.Seed())
 
-	res1, err3 := Exchange(&pub2, &priv1)
-	res2, err4 := Exchange(&pub1, &priv2)
+	res1, err3 := Exchange(&priv1, &pub2)
+	res2, err4 := Exchange(&priv2, &pub1)
 
 	if err3 != nil || err4 != nil {
 		t.Errorf("Errors during key exchange, err3:" + err3.Error() + ", err4:" + err4.Error())
