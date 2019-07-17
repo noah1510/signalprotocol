@@ -13,6 +13,8 @@ It is used for the initiator of the Keyexchange.
 
 Parameters:
 	hash: a string that specifies the used hash functions (SHA256, SHA512)
+
+At the moment this does not work so do not use it for now.
 */
 func InitiatorCurve25519(
 	hash string,
@@ -24,6 +26,7 @@ func InitiatorCurve25519(
 
 	var returnError error
 
+	//Checking if a valid hash was given
 	if !(hash == "SHA512" || hash == "SHA256") {
 		returnError = errors.New("not a valid hash value " + hash)
 		return returnError
@@ -39,18 +42,29 @@ func InitiatorCurve25519(
 	//Doing all the Keyexchanges
 	// DH1 = DH(IKA, SPKB)
 	dh1, returnError = X25519.Exchange(&privateIdentityKeySender, &publicSignedPreKeyReceiver)
+	if returnError != nil {
+		log.Printf("Error during keyexchanges!:\nDH1: %+v", dh1)
+		return returnError
+	}
 
 	// DH2 = DH(EKA, IKB)
 	dh2, returnError = X25519.Exchange(&privateEphemeralKeySender, &publicIdentityKeyReceiver)
+	if returnError != nil {
+		log.Printf("Error during keyexchanges!:\nDH2: %+v", dh2)
+		return returnError
+	}
 
 	// DH3 = DH(EKA, SPKB)
 	dh3, returnError = X25519.Exchange(&privateEphemeralKeySender, &publicSignedPreKeyReceiver)
+	if returnError != nil {
+		log.Printf("Error during keyexchanges!:\nDH3: %+v", dh3)
+		return returnError
+	}
 
 	// DH4 = DH(EKA, OPKB)
 	dh4, returnError = X25519.Exchange(&privateEphemeralKeySender, &publicOneTimePreKeyReceiver)
-
 	if returnError != nil {
-		log.Printf("Error during keyexchanges!:\nDH1: %+v\nDH2: %+v\nDH3: %+v\nDH4: %+v\n", dh1, dh2, dh3, dh4)
+		log.Printf("Error during keyexchanges!:\nDH4: %+v", dh4)
 		return returnError
 	}
 

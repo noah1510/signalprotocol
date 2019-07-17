@@ -8,7 +8,9 @@ import (
 	"golang.org/x/crypto/ed25519"
 )
 
-/*Exchange does a simple x25519 keyexchange*/
+/*Exchange does a simple x25519 keyexchange
+Give it an ed25519.PrivateKey and an ed25519.PublicKey and retrieve the shared secret and an error code if something went wrong.
+*/
 func Exchange(
 	privateKeyA *ed25519.PrivateKey,
 	publicKeyB *ed25519.PublicKey) ([32]byte, error) {
