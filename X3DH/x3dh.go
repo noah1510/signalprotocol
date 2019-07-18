@@ -3,8 +3,9 @@ package X3DH
 import (
 	"errors"
 	"log"
-	"signalprotocol/HKDF"
-	"signalprotocol/X25519"
+
+	"github.com/noah1510/signalprotocol/HKDF"
+	"github.com/noah1510/signalprotocol/X25519"
 
 	"golang.org/x/crypto/ed25519"
 )
